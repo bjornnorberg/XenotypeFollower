@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Verse;
 using RimWorld;
 
-namespace XenotypeFollower
+namespace BowaXenotypeFollower
 {
     [StaticConstructorOnStartup]
     public static class XenotypeFollower

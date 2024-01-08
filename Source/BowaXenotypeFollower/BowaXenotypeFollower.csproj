@@ -7,8 +7,8 @@
     <ProjectGuid>{EE6A97C2-4601-4C50-B727-734A9F2289FD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XenotypeFollower</RootNamespace>
-    <AssemblyName>XenotypeFollower</AssemblyName>
+    <RootNamespace>BowaXenotypeFollower</RootNamespace>
+    <AssemblyName>BowaXenotypeFollower</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\..\..\2009463077\Current\Assemblies\0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
@@ -49,6 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HarmonyPatcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XenotypeFollower.cs" />
   </ItemGroup>

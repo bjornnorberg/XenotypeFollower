@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XenotypeFollower", "XenotypeFollower\XenotypeFollower.csproj", "{EE6A97C2-4601-4C50-B727-734A9F2289FD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BowaXenotypeFollower", "BowaXenotypeFollower\BowaXenotypeFollower.csproj", "{EE6A97C2-4601-4C50-B727-734A9F2289FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
