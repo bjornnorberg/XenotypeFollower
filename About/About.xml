@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ModMetaData>
+  <name>Xenotype followers</name>
+  <author>Bowa</author>
+  <supportedVersions>
+    <li>1.4</li>
+  </supportedVersions>
+  <description>
+   Temp
+  </description>
+  <packageId>bowa.xenotype.follower</packageId>
+
+</ModMetaData>
