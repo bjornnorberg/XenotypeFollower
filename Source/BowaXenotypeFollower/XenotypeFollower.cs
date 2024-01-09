@@ -2,6 +2,7 @@
 using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime;
 using UnityEngine;
 using Verse;
 
@@ -11,12 +12,16 @@ namespace BowaXenotypeFollower
     {
         public XenotypeFollowerSettings settings;
 
+
         IEnumerable<XenotypeDef> baseXenotypes = new List<XenotypeDef>();
+
+        private float scrollViewHeight = 96f;
+
+        private Vector2 scrollPosition = Vector2.zero;
 
         public XenotypeFollower(ModContentPack content) : base(content)
         {
-            this.settings = GetSettings<XenotypeFollowerSettings>();
-            Log.Message("baseXenotypeDefNames" + settings.baseXenotypeDefNames.Count());
+            settings = GetSettings<XenotypeFollowerSettings>();
             baseXenotypes = PossibleBaseXenoTypes();
         }
 
@@ -24,7 +29,7 @@ namespace BowaXenotypeFollower
         {
             Listing_Standard listingStandard = new Listing_Standard();
             listingStandard.Begin(inRect);
-            listingStandard.Label("NOTE: This is a test label");
+            listingStandard.Label("Add Xenotypes you want to spawn when performing ritual, if none are added vanilla rules are applied.");
             listingStandard.End();
 
             #region Add baseXenoType
@@ -37,11 +42,11 @@ namespace BowaXenotypeFollower
 
                 foreach (var baseXenoType in baseXenotypes)
                 {
-                    if (!settings.baseXenotypeDefNames.Contains(baseXenoType.defName))
+                    if (!XenotypeFollowerSettings.baseXenotypeDefNames.Contains(baseXenoType.defName))
                     {
                         listOfAddableBaseXenotypes.Add(new FloatMenuOption(baseXenoType.defName, delegate ()
                         {
-                            settings.baseXenotypeDefNames.Add(baseXenoType.defName);
+                            XenotypeFollowerSettings.baseXenotypeDefNames.Add(baseXenoType.defName);
                         }));
                     }
                 }
@@ -59,13 +64,13 @@ namespace BowaXenotypeFollower
             if (removeFlag)
             {
                 List<FloatMenuOption> listOfRemovableBaseXenotypes = new List<FloatMenuOption>();
-                List<string> addedBaseXenotypeDefNames = settings.baseXenotypeDefNames;
-                Log.Message("baseXenotypeDefNames" + settings.baseXenotypeDefNames.Count());
+                List<string> addedBaseXenotypeDefNames = XenotypeFollowerSettings.baseXenotypeDefNames;
+                Log.Message("baseXenotypeDefNames" + XenotypeFollowerSettings.baseXenotypeDefNames.Count());
                 foreach (var baseXenotypeDefName in addedBaseXenotypeDefNames)
                 {
                     listOfRemovableBaseXenotypes.Add(new FloatMenuOption(baseXenotypeDefName, delegate ()
                     {
-                        settings.baseXenotypeDefNames.Remove(baseXenotypeDefName);
+                        XenotypeFollowerSettings.baseXenotypeDefNames.Remove(baseXenotypeDefName);
 
                     }, MenuOptionPriority.Default, null, null, 0f, null, null, true, 0));
                 }
@@ -75,16 +80,37 @@ namespace BowaXenotypeFollower
 
             #endregion Remove baseXenoType
 
+            #region The list GUI
+
+            var startHeight = 268f;
+            Rect position = inRect.TopPart(0.90f);
+            GUI.BeginGroup(position);
+            Rect outRect = new Rect(0f, 268f, position.width, position.height);
+            Rect viewRect = new Rect(0f, 268f, position.width, this.scrollViewHeight);
+            Widgets.BeginScrollView(outRect, ref this.scrollPosition, viewRect, true);
+
+            foreach (string baseXenotypeDefName in XenotypeFollowerSettings.baseXenotypeDefNames)
+            {
+                Rect rectList = new Rect(0f, startHeight, viewRect.width, 32f);
+
+                var baseXenoType = baseXenotypes.FirstOrDefault(x => x.defName == baseXenotypeDefName);
+                if (baseXenoType != null)
+                {
+                    Widgets.Label(rectList, baseXenoType.defName);
+                    Widgets.DefIcon(rectList, baseXenoType);
+                }
+                startHeight = startHeight + 32f; // Increase everytime to make the new row in the list.
+                this.scrollViewHeight = startHeight;
+            }
+            Widgets.EndScrollView();
+            GUI.EndGroup();
+
+            #endregion The list GUI
+
             base.DoSettingsWindowContents(inRect);
         }
 
-
-
-
-        public static IEnumerable<XenotypeDef> PossibleBaseXenoTypes()
-        {
-            return DefDatabase<XenotypeDef>.AllDefs.OrderBy((XenotypeDef x) => x.defName);
-        }
+        public static IEnumerable<XenotypeDef> PossibleBaseXenoTypes() => DefDatabase<XenotypeDef>.AllDefs.OrderBy((XenotypeDef x) => x.defName);
 
         public override string SettingsCategory()
         {

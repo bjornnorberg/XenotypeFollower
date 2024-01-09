@@ -1,23 +1,49 @@
 ﻿using RimWorld;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Verse;
 
 namespace BowaXenotypeFollower.Settings
 {
     public class XenotypeFollowerSettings : ModSettings
     {
-        public List<string> baseXenotypeDefNames = new List<string>();
+        public static List<string> baseXenotypeDefNames = new List<string>();
         //public List<XenotypeDef> baseXenotypeDefs = new List<XenotypeDef>();
-        public List<string> customXenotypesDefNames = new List<string>();
+        public static List<string> customXenotypesDefNames = new List<string>();
         //public List<CustomXenotype> customXenotypesDefs = new List<CustomXenotype>();
+
+        public XenotypeFollowerSettings()
+        {
+        }
 
         public override void ExposeData()
         {
             base.ExposeData();
+
+            if (Scribe.mode == LoadSaveMode.LoadingVars)
+            {
+
+                List<string> defNames = null;
+                List<string> cleanDefNames = new List<string>();
+                Scribe_Collections.Look(ref defNames, "baseXenotypeDefNames");
+
+                // Gotta wait for DefOfs to load to use DefDatabase
+                if (defNames != null)
+                {
+                    LongEventHandler.ExecuteWhenFinished(() =>
+                    {
+                        IEnumerable<string> availableBaseXenoTypesDefNames = DefDatabase<XenotypeDef>.AllDefs.OrderBy((XenotypeDef x) => x.defName).Select((XenotypeDef z) => z.defName);
+
+                        // Remove potential defNames that no longer exists in the def database.
+                        foreach (string defName in defNames)
+                        {
+                            if (availableBaseXenoTypesDefNames.Contains(defName)) cleanDefNames.Add(defName);
+                        }
+                        baseXenotypeDefNames = cleanDefNames;
+                    });
+                }
+            }
+
 
             Scribe_Collections.Look(ref baseXenotypeDefNames, "baseXenotypeDefNames", LookMode.Value);
             Scribe_Collections.Look(ref customXenotypesDefNames, "customXenotypesDefNames", LookMode.Value);
