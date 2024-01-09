@@ -21,14 +21,12 @@ namespace BowaXenotypeFollower.Ritual
 
             if (Rand.Chance(0.5f))
             {
-                PawnGenerationRequest pawnGenerationRequest = new PawnGenerationRequest(PawnKindDefOf.Villager, null, PawnGenerationContext.NonPlayer, -1, forceGenerateNewPawn: true, allowDead: false, allowDowned: false, canGeneratePawnRelations: true, mustBeCapableOfViolence: false, 20f, forceAddFreeWarmLayerIfNeeded: false, allowGay: true, allowPregnant: false, allowFood: true, allowAddictions: true, inhabitant: false, certainlyBeenInCryptosleep: false, forceRedressWorldPawnIfFormerColonist: false, worldPawnFactionDoesntMatter: false, 0f, 0f, null, 1f, null, null, null, null, null, null, 60f, null, "MAKARON", "MAKARONER", null, jobRitual.Ritual.ideo, false, false, false, false, null, null, null, null, null, 0);
+                PawnGenerationRequest pawnGenerationRequest = new PawnGenerationRequest(PawnKindDefOf.Villager, null, PawnGenerationContext.NonPlayer, -1, forceGenerateNewPawn: true, allowDead: false, allowDowned: false, canGeneratePawnRelations: true, mustBeCapableOfViolence: false, 20f, forceAddFreeWarmLayerIfNeeded: false, allowGay: true, allowPregnant: false, allowFood: true, allowAddictions: true, inhabitant: false, certainlyBeenInCryptosleep: false, forceRedressWorldPawnIfFormerColonist: false, worldPawnFactionDoesntMatter: false, 0f, 0f, null, 1f, null, null, null, null, null, null, null, null, null, null, null, jobRitual.Ritual.ideo);
+
                 IEnumerable<XenotypeDef> xenotypeDefs = DefDatabase<XenotypeDef>.AllDefs
                     .Where((XenotypeDef x) => XenotypeFollowerSettings.baseXenotypeDefNames.Contains(x.defName));
 
-
-
-                pawnGenerationRequest.ForcedXenotype = xenotypeDefs.First(); // TODO: Fix RNG if more than 1.
-
+                pawnGenerationRequest.ForcedXenotype = xenotypeDefs.RandomElement();
 
                 Slate slate = new Slate();
                 slate.Set("map", jobRitual.Map);
@@ -39,7 +37,6 @@ namespace BowaXenotypeFollower.Ritual
             else
             {
                 extraOutcomeDesc = null;
-
             }
             return false;
         }
