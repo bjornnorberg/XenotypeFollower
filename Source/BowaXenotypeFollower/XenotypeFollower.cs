@@ -47,7 +47,7 @@ namespace BowaXenotypeFollower
                         listOfAddableBaseXenotypes.Add(new FloatMenuOption(baseXenoType.defName, delegate ()
                         {
                             XenotypeFollowerSettings.baseXenotypeDefNames.Add(baseXenoType.defName);
-                        }));
+                        }, itemIcon: baseXenoType.Icon, iconColor: Color.white));
                     }
                 }
                 FloatMenu addWindow = new FloatMenu(listOfAddableBaseXenotypes);
@@ -66,13 +66,14 @@ namespace BowaXenotypeFollower
                 List<FloatMenuOption> listOfRemovableBaseXenotypes = new List<FloatMenuOption>();
                 List<string> addedBaseXenotypeDefNames = XenotypeFollowerSettings.baseXenotypeDefNames;
                 Log.Message("baseXenotypeDefNames" + XenotypeFollowerSettings.baseXenotypeDefNames.Count());
-                foreach (var baseXenotypeDefName in addedBaseXenotypeDefNames)
+                IEnumerable<XenotypeDef> addedBaseXenotypeDefs = baseXenotypes.Where((x) => addedBaseXenotypeDefNames.Contains(x.defName));
+                foreach (XenotypeDef addedBaseXenotypeDef in addedBaseXenotypeDefs)
                 {
-                    listOfRemovableBaseXenotypes.Add(new FloatMenuOption(baseXenotypeDefName, delegate ()
+                    listOfRemovableBaseXenotypes.Add(new FloatMenuOption(addedBaseXenotypeDef.defName, delegate ()
                     {
-                        XenotypeFollowerSettings.baseXenotypeDefNames.Remove(baseXenotypeDefName);
+                        XenotypeFollowerSettings.baseXenotypeDefNames.Remove(addedBaseXenotypeDef.defName);
 
-                    }, MenuOptionPriority.Default, null, null, 0f, null, null, true, 0));
+                    }, itemIcon: addedBaseXenotypeDef.Icon, iconColor: Color.white));
                 }
                 FloatMenu removeWindow = new FloatMenu(listOfRemovableBaseXenotypes);
                 Find.WindowStack.Add(removeWindow);
