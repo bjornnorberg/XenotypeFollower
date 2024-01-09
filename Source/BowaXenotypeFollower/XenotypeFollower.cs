@@ -11,14 +11,13 @@ namespace BowaXenotypeFollower
     {
         public XenotypeFollowerSettings settings;
 
-        IEnumerable<XenotypeDef> baseXenoTypes = new List<XenotypeDef>();
+        IEnumerable<XenotypeDef> baseXenotypes = new List<XenotypeDef>();
 
         public XenotypeFollower(ModContentPack content) : base(content)
         {
             this.settings = GetSettings<XenotypeFollowerSettings>();
-            Log.Message("Settings content " + settings.baseXenotypeDefsNames);
-            baseXenoTypes = PossibleBaseXenoTypes();
-            Log.Message("baseXenoTypes length: " + baseXenoTypes.Count());
+            Log.Message("baseXenotypeDefNames" + settings.baseXenotypeDefNames.Count());
+            baseXenotypes = PossibleBaseXenoTypes();
         }
 
         public override void DoSettingsWindowContents(Rect inRect)
@@ -28,29 +27,59 @@ namespace BowaXenotypeFollower
             listingStandard.Label("NOTE: This is a test label");
             listingStandard.End();
 
-            Rect addItem = new Rect(0f, 172f, 200f, 32f);
-            bool flag = Widgets.ButtonText(addItem, "Add to list", true, true, true);
-            if (flag)
-            {
-                List<FloatMenuOption> list = new List<FloatMenuOption>();
+            #region Add baseXenoType
 
-                foreach (var baseXenoType in baseXenoTypes)
+            Rect addBaseXenoType = new Rect(0f, 172f, 200f, 32f);
+            bool addFlag = Widgets.ButtonText(addBaseXenoType, "Add to list", true, true, true);
+            if (addFlag)
+            {
+                List<FloatMenuOption> listOfAddableBaseXenotypes = new List<FloatMenuOption>();
+
+                foreach (var baseXenoType in baseXenotypes)
                 {
-                    if (!settings.baseXenotypeDefsNames.Contains(baseXenoType.defName))
+                    if (!settings.baseXenotypeDefNames.Contains(baseXenoType.defName))
                     {
-                        list.Add(new FloatMenuOption(baseXenoType.label, delegate ()
+                        listOfAddableBaseXenotypes.Add(new FloatMenuOption(baseXenoType.defName, delegate ()
                         {
-                            settings.baseXenotypeDefsNames.Add(baseXenoType.defName);
+                            settings.baseXenotypeDefNames.Add(baseXenoType.defName);
                         }));
                     }
                 }
-                FloatMenu window = new FloatMenu(list);
-                Find.WindowStack.Add(window);
+                FloatMenu addWindow = new FloatMenu(listOfAddableBaseXenotypes);
+                Find.WindowStack.Add(addWindow);
             }
 
-            listingStandard.End();
+
+            #endregion Add baseXenoType
+
+            #region Remove baseXenoType
+
+            Rect removeBaseXenoType = new Rect(0f, 204f, 200f, 32f);
+            bool removeFlag = Widgets.ButtonText(removeBaseXenoType, "Remove from list", true, true, true);
+            if (removeFlag)
+            {
+                List<FloatMenuOption> listOfRemovableBaseXenotypes = new List<FloatMenuOption>();
+                List<string> addedBaseXenotypeDefNames = settings.baseXenotypeDefNames;
+                Log.Message("baseXenotypeDefNames" + settings.baseXenotypeDefNames.Count());
+                foreach (var baseXenotypeDefName in addedBaseXenotypeDefNames)
+                {
+                    listOfRemovableBaseXenotypes.Add(new FloatMenuOption(baseXenotypeDefName, delegate ()
+                    {
+                        settings.baseXenotypeDefNames.Remove(baseXenotypeDefName);
+
+                    }, MenuOptionPriority.Default, null, null, 0f, null, null, true, 0));
+                }
+                FloatMenu removeWindow = new FloatMenu(listOfRemovableBaseXenotypes);
+                Find.WindowStack.Add(removeWindow);
+            }
+
+            #endregion Remove baseXenoType
+
             base.DoSettingsWindowContents(inRect);
         }
+
+
+
 
         public static IEnumerable<XenotypeDef> PossibleBaseXenoTypes()
         {
