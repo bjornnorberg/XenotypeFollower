@@ -51,11 +51,15 @@
       <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HarmonyPatcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ritual\Ritual.cs" />
+    <Compile Include="Settings\XenotypeFollowerSettings.cs" />
     <Compile Include="XenotypeFollower.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

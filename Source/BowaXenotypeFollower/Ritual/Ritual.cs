@@ -2,7 +2,6 @@
 using RimWorld;
 using RimWorld.QuestGen;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using Verse;
 
 namespace BowaXenotypeFollower.Ritual
@@ -20,6 +19,10 @@ namespace BowaXenotypeFollower.Ritual
             if (Rand.Chance(0.5f))
             {
                 PawnGenerationRequest pawnGenerationRequest = new PawnGenerationRequest(PawnKindDefOf.Villager, null, PawnGenerationContext.NonPlayer, -1, forceGenerateNewPawn: true, allowDead: false, allowDowned: false, canGeneratePawnRelations: true, mustBeCapableOfViolence: false, 20f, forceAddFreeWarmLayerIfNeeded: false, allowGay: true, allowPregnant: false, allowFood: true, allowAddictions: true, inhabitant: false, certainlyBeenInCryptosleep: false, forceRedressWorldPawnIfFormerColonist: false, worldPawnFactionDoesntMatter: false, 0f, 0f, null, 1f, null, null, null, null, null, null, 60f, null, "MAKARON", "MAKARONER", null, jobRitual.Ritual.ideo, false, false, false, false, null, null, null, null, null, 0);
+
+                // pawnGenerationRequest.ForcedXenotype = XenotypeDef
+
+
                 Slate slate = new Slate();
                 slate.Set("map", jobRitual.Map);
                 slate.Set("overridePawnGenParams", pawnGenerationRequest);
@@ -29,6 +32,7 @@ namespace BowaXenotypeFollower.Ritual
             else
             {
                 extraOutcomeDesc = null;
+
             }
             return false;
         }
