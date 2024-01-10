@@ -11,11 +11,11 @@ namespace BowaXenotypeFollower.Loader
 {
     public static class CustomLoader
     {
-        public static List<CustomXenotype> customXenotypes = new List<CustomXenotype>();
+        public static List<CustomXenotype> CustomXenotypes = new List<CustomXenotype>();
 
         static CustomLoader()
         {
-            LoadAllCustomXenotypes();
+            LoadAllCustomXenotypes(); // Load from XML files in %appdata%                     
         }
 
         private static void LoadAllCustomXenotypes()
@@ -27,7 +27,7 @@ namespace BowaXenotypeFollower.Loader
                 {
                     CustomXenotype loadedCustomXenotype = TryLoadCustomXenotype(customXenotype.name);
                     if (loadedCustomXenotype != null)
-                        customXenotypes.Add(TryLoadCustomXenotype(loadedCustomXenotype.name));
+                        CustomXenotypes.Add(TryLoadCustomXenotype(loadedCustomXenotype.name));
                 }
             }
 
@@ -37,8 +37,8 @@ namespace BowaXenotypeFollower.Loader
                 CustomXenotype customXenotype = TryLoadCustomXenotype(Path.GetFileNameWithoutExtension(xenotypeFile.Name));
                 if (customXenotype != null)
                 {
-                    Log.Message("");       // TODO: Continue here.
-                    customXenotypes.Add(customXenotype);
+                    Log.Message("customXenotype " + customXenotype.name);
+                    CustomXenotypes.Add(customXenotype);
                 }
             }
         }

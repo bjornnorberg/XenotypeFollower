@@ -63,6 +63,7 @@
     <Compile Include="Loader\CustomLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ritual\Ritual.cs" />
+    <Compile Include="Settings\SettingWindow.cs" />
     <Compile Include="Settings\XenotypeFollowerSettings.cs" />
     <Compile Include="XenotypeFollower.cs" />
   </ItemGroup>

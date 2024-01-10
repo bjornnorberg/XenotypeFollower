@@ -1,16 +1,17 @@
-﻿using RimWorld;
+﻿using BowaXenotypeFollower.Loader;
+using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using Verse;
 
 namespace BowaXenotypeFollower.Settings
 {
     public class XenotypeFollowerSettings : ModSettings
     {
-        public static List<string> baseXenotypeDefNames = new List<string>();
-        //public List<XenotypeDef> baseXenotypeDefs = new List<XenotypeDef>();
-        public static List<string> customXenotypesDefNames = new List<string>();
-        //public List<CustomXenotype> customXenotypesDefs = new List<CustomXenotype>();
+        public static List<string> BaseXenotypeDefNames = new List<string>();
+
+        public static List<string> CustomXenotypesDefNames = new List<string>();
 
         public XenotypeFollowerSettings()
         {
@@ -20,9 +21,9 @@ namespace BowaXenotypeFollower.Settings
         {
             base.ExposeData();
 
+
             if (Scribe.mode == LoadSaveMode.LoadingVars)
             {
-
                 List<string> defNames = null;
                 List<string> cleanDefNames = new List<string>();
                 Scribe_Collections.Look(ref defNames, "baseXenotypeDefNames");
@@ -39,15 +40,17 @@ namespace BowaXenotypeFollower.Settings
                         {
                             if (availableBaseXenoTypesDefNames.Contains(defName)) cleanDefNames.Add(defName);
                         }
-                        baseXenotypeDefNames = cleanDefNames;
+                        BaseXenotypeDefNames = cleanDefNames;
                     });
                 }
             }
 
 
-            Scribe_Collections.Look(ref baseXenotypeDefNames, "baseXenotypeDefNames", LookMode.Value);
-            Scribe_Collections.Look(ref customXenotypesDefNames, "customXenotypesDefNames", LookMode.Value);
+            Scribe_Collections.Look(ref BaseXenotypeDefNames, "baseXenotypeDefNames", LookMode.Value);
+            Scribe_Collections.Look(ref CustomXenotypesDefNames, "customXenotypesDefNames", LookMode.Value);
         }
+
+
 
     }
 }
