@@ -55,14 +55,13 @@ namespace BowaXenotypeFollower.Settings
 
                 foreach (var customXenoType in CustomXenotypes)
                 {
-                    if (!XenotypeFollowerSettings.BaseXenotypeDefNames.Contains(customXenoType.name))
+                    if (!XenotypeFollowerSettings.CustomXenotypesDefNames.Contains(customXenoType.name))
                     {
                         listOfAddableBaseXenotypes.Add(new FloatMenuOption(customXenoType.name, delegate ()
                         {
-                            XenotypeFollowerSettings.BaseXenotypeDefNames.Add(customXenoType.name);
-                        }));
+                            XenotypeFollowerSettings.CustomXenotypesDefNames.Add(customXenoType.name);
+                        }, itemIcon: customXenoType.IconDef.Icon, iconColor: Color.white));
                     }
-                    Log.Message("foreach in : Mod" + customXenoType.name);
                 }
 
                 FloatMenu addWindow = new FloatMenu(listOfAddableBaseXenotypes);
@@ -79,8 +78,7 @@ namespace BowaXenotypeFollower.Settings
             if (removeFlag && (XenotypeFollowerSettings.CustomXenotypesDefNames.Count > 0 || XenotypeFollowerSettings.BaseXenotypeDefNames.Count > 0))
             {
                 List<FloatMenuOption> listOfRemovableBaseXenotypes = new List<FloatMenuOption>();
-                List<string> addedBaseXenotypeDefNames = XenotypeFollowerSettings.BaseXenotypeDefNames;
-                IEnumerable<XenotypeDef> addedBaseXenotypeDefs = BaseXenotypes.Where((x) => addedBaseXenotypeDefNames.Contains(x.defName));
+                IEnumerable<XenotypeDef> addedBaseXenotypeDefs = BaseXenotypes.Where((x) => XenotypeFollowerSettings.BaseXenotypeDefNames.Contains(x.defName));
 
                 foreach (XenotypeDef addedBaseXenotypeDef in addedBaseXenotypeDefs)
                 {
@@ -91,17 +89,16 @@ namespace BowaXenotypeFollower.Settings
                     }, itemIcon: addedBaseXenotypeDef.Icon, iconColor: Color.white));
                 }
 
-                //foreach (var customXenoType in CustomXenotypes)
-                //{
-                //    if (!XenotypeFollowerSettings.BaseXenotypeDefNames.Contains(customXenoType.name))
-                //    {
-                //        listOfAddableBaseXenotypes.Add(new FloatMenuOption(customXenoType.name, delegate ()
-                //        {
-                //            XenotypeFollowerSettings.BaseXenotypeDefNames.Add(customXenoType.name);
-                //        }));
-                //    }
-                //    Log.Message("foreach in : Mod" + customXenoType.name);
-                //}
+                IEnumerable<CustomXenotype> addedCustomXenotypes = CustomXenotypes.Where((x) => XenotypeFollowerSettings.CustomXenotypesDefNames.Contains(x.name));
+
+                foreach (CustomXenotype addedCustomXenotype in addedCustomXenotypes)
+                {
+                    listOfRemovableBaseXenotypes.Add(new FloatMenuOption(addedCustomXenotype.name, delegate ()
+                    {
+                        XenotypeFollowerSettings.CustomXenotypesDefNames.Remove(addedCustomXenotype.name);
+
+                    }, itemIcon: addedCustomXenotype.IconDef.Icon, iconColor: Color.white));
+                }
 
                 FloatMenu removeWindow = new FloatMenu(listOfRemovableBaseXenotypes);
                 Find.WindowStack.Add(removeWindow);
@@ -131,6 +128,24 @@ namespace BowaXenotypeFollower.Settings
                 startHeight = startHeight + 32f; // Increase everytime to make the new row in the list.
                 this.scrollViewHeight = startHeight;
             }
+
+            foreach (string customXenotypeDefName in XenotypeFollowerSettings.CustomXenotypesDefNames)
+            {
+                Rect rectList = new Rect(0f, startHeight, viewRect.width, 32f);
+
+                var customXenoType = CustomXenotypes.FirstOrDefault(x => x.name == customXenotypeDefName);
+                if (customXenoType != null)
+                {
+                    var test = "";
+                    Widgets.Label(rectList, customXenoType.name);
+                    //Widgets.DefIcon(rectList, customXenoType.IconDef); // TODO: Look into how to render the icons.
+                    Widgets.DrawTextureFitted(rectList, customXenoType.IconDef.Icon, scale: 1f);
+
+                }
+                startHeight = startHeight + 32f; // Increase everytime to make the new row in the list.
+                this.scrollViewHeight = startHeight;
+            }
+
             Widgets.EndScrollView();
             GUI.EndGroup();
 

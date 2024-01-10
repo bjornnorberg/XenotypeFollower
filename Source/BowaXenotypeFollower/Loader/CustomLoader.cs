@@ -15,10 +15,10 @@ namespace BowaXenotypeFollower.Loader
 
         static CustomLoader()
         {
-            LoadAllCustomXenotypes(); // Load from XML files in %appdata%                     
+            LoadAllCustomXenotypes();
         }
 
-        private static void LoadAllCustomXenotypes()
+        public static void LoadAllCustomXenotypes() // Load from XML files in %appdata% 
         {
             var customXenotypeDatabase = Current.Game?.customXenotypeDatabase?.customXenotypes;
             if (customXenotypeDatabase != null) // always false tbh
@@ -27,7 +27,10 @@ namespace BowaXenotypeFollower.Loader
                 {
                     CustomXenotype loadedCustomXenotype = TryLoadCustomXenotype(customXenotype.name);
                     if (loadedCustomXenotype != null)
-                        CustomXenotypes.Add(TryLoadCustomXenotype(loadedCustomXenotype.name));
+                    {
+                        if (!CustomXenotypes.Contains(customXenotype))
+                            CustomXenotypes.Add(TryLoadCustomXenotype(loadedCustomXenotype.name));
+                    }
                 }
             }
 
@@ -37,8 +40,8 @@ namespace BowaXenotypeFollower.Loader
                 CustomXenotype customXenotype = TryLoadCustomXenotype(Path.GetFileNameWithoutExtension(xenotypeFile.Name));
                 if (customXenotype != null)
                 {
-                    Log.Message("customXenotype " + customXenotype.name);
-                    CustomXenotypes.Add(customXenotype);
+                    if (!CustomXenotypes.Contains(customXenotype))
+                        CustomXenotypes.Add(customXenotype);
                 }
             }
         }
