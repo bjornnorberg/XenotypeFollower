@@ -60,11 +60,11 @@ namespace BowaXenotypeFollower.Ritual
 
                 if (rngXeno.isCustom)
                 {
-                    pawnGenerationRequest.ForcedCustomXenotype = customXenogerms.First((x) => x.name == rngXeno.Name);
+                    pawnGenerationRequest.ForcedCustomXenotype = customXenogerms.FirstOrDefault((x) => x.name == rngXeno.Name);
                 }
                 else
                 {
-                    pawnGenerationRequest.ForcedXenotype = xenotypeDefs.First((x) => x.defName == rngXeno.Name);
+                    pawnGenerationRequest.ForcedXenotype = xenotypeDefs.FirstOrDefault((x) => x.defName == rngXeno.Name);
                 }
 
                 Slate slate = new Slate();

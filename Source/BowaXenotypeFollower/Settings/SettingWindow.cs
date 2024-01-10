@@ -24,8 +24,26 @@ namespace BowaXenotypeFollower.Settings
         {
         }
 
+        public void CleanDeletedCustomXenos()
+        {
+            List<CustomXenotype> loadedCustomXenotypes = CustomLoader.CustomXenotypes;
+            List<string> savedCustomXenoTypes = XenotypeFollowerSettings.CustomXenotypesDefNames;
+
+            foreach (var savedCustomXenoType in savedCustomXenoTypes.ToList())
+            {
+                bool isXenotypeLoaded = loadedCustomXenotypes.Any(customXeno => customXeno.name == savedCustomXenoType);
+
+                if (!isXenotypeLoaded)
+                {
+                    XenotypeFollowerSettings.CustomXenotypesDefNames.Remove(savedCustomXenoType);
+                }
+            }
+
+        }
+
         public void DoSettingsWindowContents(Rect inRect)
         {
+            CleanDeletedCustomXenos();
             BaseXenotypes = PossibleBaseXenoTypes();
             CustomXenotypes = CustomLoader.CustomXenotypes;
 

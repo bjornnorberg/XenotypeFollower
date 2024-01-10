@@ -7,7 +7,11 @@
     <li>1.4</li>
   </supportedVersions>
   <description>
-   Temp
+   This mod enables you to configure what Xenotypes might join you when perfomring a ritual with the random recruit reward. It supports all modded Xenotypes and all your custom created Xenotypes.
+   
+   Note that this does only affect the recruits from rituals. If you want more control I recomend Xenotype Spawn Control by bradson
+   
+   Should be compatible with most mods.
   </description>
   <modDependencies>
     <li>
