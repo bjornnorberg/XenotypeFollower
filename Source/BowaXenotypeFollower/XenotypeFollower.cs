@@ -1,4 +1,5 @@
-﻿using BowaXenotypeFollower.Settings;
+﻿using BowaXenotypeFollower.Loader;
+using BowaXenotypeFollower.Settings;
 using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace BowaXenotypeFollower
 
 
         IEnumerable<XenotypeDef> baseXenotypes = new List<XenotypeDef>();
+        List<CustomXenotype> customXenotypes = new List<CustomXenotype>();
 
         private float scrollViewHeight = 96f;
 
@@ -23,6 +25,8 @@ namespace BowaXenotypeFollower
         {
             settings = GetSettings<XenotypeFollowerSettings>();
             baseXenotypes = PossibleBaseXenoTypes();
+            customXenotypes = CustomLoader.customXenotypes;
+            Log.Message("Custom xenotypes count: " + customXenotypes.Count);
         }
 
         public override void DoSettingsWindowContents(Rect inRect)

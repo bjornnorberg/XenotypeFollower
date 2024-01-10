@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HarmonyPatcher.cs" />
+    <Compile Include="Loader\CustomLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ritual\Ritual.cs" />
     <Compile Include="Settings\XenotypeFollowerSettings.cs" />
