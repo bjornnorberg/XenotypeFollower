@@ -1,12 +1,10 @@
 ﻿using HarmonyLib;
-using Mono.Cecil.Cil;
 using RimWorld;
+using RimWorld.Planet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Reflection.Emit;
 using Verse;
 
@@ -18,12 +16,12 @@ namespace BowaXenotypeFollower.Ritual
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);
-
-            ConstructorInfo targetConstructor = typeof(PawnGenerationRequest).GetConstructor(new[] { 
+            
+        ConstructorInfo targetConstructor = typeof(PawnGenerationRequest).GetConstructor(new[] { 
                 typeof(PawnKindDef),
                 typeof(Faction),
                 typeof(PawnGenerationContext),
-                typeof(int),
+                typeof(PlanetTile),
                 typeof(bool),
                 typeof(bool),
                 typeof(bool),

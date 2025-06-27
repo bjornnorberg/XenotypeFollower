@@ -67,7 +67,7 @@ namespace BowaXenotypeFollower.Settings
                         listOfAddableBaseXenotypes.Add(new FloatMenuOption(baseXenoType.defName, delegate ()
                         {
                             XenotypeFollowerSettings.BaseXenotypeDefNames.Add(baseXenoType.defName);
-                        }, itemIcon: baseXenoType.Icon, iconColor: Color.white));
+                        }, iconTex: baseXenoType.Icon, iconColor: Color.white));
                     }
                 }
 
@@ -78,7 +78,7 @@ namespace BowaXenotypeFollower.Settings
                         listOfAddableBaseXenotypes.Add(new FloatMenuOption(customXenoType.name, delegate ()
                         {
                             XenotypeFollowerSettings.CustomXenotypesDefNames.Add(customXenoType.name);
-                        }, itemIcon: customXenoType.IconDef.Icon, iconColor: Color.white));
+                        }, iconTex: customXenoType.IconDef.Icon, iconColor: Color.white));
                     }
                 }
 
@@ -104,7 +104,7 @@ namespace BowaXenotypeFollower.Settings
                     {
                         XenotypeFollowerSettings.BaseXenotypeDefNames.Remove(addedBaseXenotypeDef.defName);
 
-                    }, itemIcon: addedBaseXenotypeDef.Icon, iconColor: Color.white));
+                    }, iconTex: addedBaseXenotypeDef.Icon, iconColor: Color.white));
                 }
 
                 IEnumerable<CustomXenotype> addedCustomXenotypes = CustomXenotypes.Where((x) => XenotypeFollowerSettings.CustomXenotypesDefNames.Contains(x.name));
@@ -115,7 +115,7 @@ namespace BowaXenotypeFollower.Settings
                     {
                         XenotypeFollowerSettings.CustomXenotypesDefNames.Remove(addedCustomXenotype.name);
 
-                    }, itemIcon: addedCustomXenotype.IconDef.Icon, iconColor: Color.white));
+                    }, iconTex: addedCustomXenotype.IconDef.Icon, iconColor: Color.white));
                 }
 
                 FloatMenu removeWindow = new FloatMenu(listOfRemovableBaseXenotypes);

@@ -23,18 +23,18 @@ namespace BowaXenotypeFollower.Ritual
             xenoPawns.AddRange(allXenotypes.Select(x => new XenoPawn
             {
                 Name = x.Name,
-                isCustom = x.IsCustom
+                IsCustom = x.IsCustom
             }));
 
-            if (xenoPawns.Count <= 0) return request;
+            if (xenoPawns.Count <= 0) return request;            
 
-            XenoPawn rngXeno = xenoPawns.RandomElement();
+            XenoPawn rngXeno = xenoPawns.RandomElement();   
 
             IEnumerable<XenotypeDef> xenotypeDefs = DefDatabase<XenotypeDef>.AllDefs
                     .Where((XenotypeDef x) => XenotypeFollowerSettings.BaseXenotypeDefNames.Contains(x.defName));
             IEnumerable<CustomXenotype> customXenogerms = CustomLoader.CustomXenotypes.Where((CustomXenotype x) => XenotypeFollowerSettings.CustomXenotypesDefNames.Contains(x.name));
 
-            if (rngXeno.isCustom)
+            if (rngXeno.IsCustom)
             {
                 request.ForcedCustomXenotype = customXenogerms.FirstOrDefault((x) => x.name == rngXeno.Name);
             }
@@ -49,7 +49,7 @@ namespace BowaXenotypeFollower.Ritual
         class XenoPawn
         {
             public string Name { get; set; }
-            public bool isCustom { get; set; }
+            public bool IsCustom { get; set; }
         }
     }
 }
